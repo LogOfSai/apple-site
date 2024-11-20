@@ -10,7 +10,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 function Model({ scrollY }: { scrollY: React.MutableRefObject<number> }) {
-  const { nodes } = useGLTF("/assets/Duck.glb");
+  const { nodes } = useGLTF("/nextjs-3d-scroll-animations/assets/Duck.glb");
   const meshRef = useRef<THREE.Mesh>(null);
   const { viewport } = useThree();
 

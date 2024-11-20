@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  basePath: "/nextjs-3d-scroll-animations",
+  publicRuntimeConfig: {
+    basePath: "/nextjs-3d-scroll-animations",
+  },
 };
 
 export default nextConfig;
