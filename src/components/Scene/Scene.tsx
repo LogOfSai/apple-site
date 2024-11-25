@@ -9,14 +9,22 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function Model({ scrollY }: { scrollY: React.MutableRefObject<number> }) {
-  const { nodes } = useGLTF("/nextjs-3d-scroll-animations/assets/Duck.glb");
-  const meshRef = useRef<THREE.Mesh>(null);
+function MacBook({ scrollY }: { scrollY: React.MutableRefObject<number> }) {
+  const bottomModel = useGLTF(
+    "/nextjs-3d-scroll-animations/assets/Macbook_Bottom.glb"
+  );
+  const topModel = useGLTF(
+    "/nextjs-3d-scroll-animations/assets/Macbook_Top.glb"
+  );
+  const topRef = useRef<THREE.Mesh>(null);
+  const bottomRef = useRef<THREE.Mesh>(null);
+  const groupRef = useRef<THREE.Group>(null);
   const { viewport } = useThree();
 
   useEffect(() => {
-    if (!meshRef.current) return;
+    if (!topRef.current || !bottomRef.current || !groupRef.current) return;
 
+    // Second section: Open up and show the screen
     gsap
       .timeline({
         scrollTrigger: {
@@ -26,19 +34,43 @@ function Model({ scrollY }: { scrollY: React.MutableRefObject<number> }) {
           scrub: true,
         },
       })
-      .to(meshRef.current.position, {
-        x: viewport.width / 4,
-        ease: "power2.inOut",
-      })
       .to(
-        meshRef.current.rotation,
+        groupRef.current.position,
         {
-          y: Math.PI / 2,
+          x: viewport.width / 4,
           ease: "power2.inOut",
         },
         "<"
+      )
+      .to(
+        groupRef.current.rotation,
+        {
+          x: -Math.PI,
+          y: 0.5,
+          ease: "power2.inOut",
+        },
+        "<"
+      )
+      .to(
+        groupRef.current.scale,
+        {
+          x: 0.6,
+          y: 0.6,
+          z: 0.6,
+          ease: "power2.inOut",
+        },
+        "<"
+      )
+      .to(
+        topRef.current.rotation,
+        {
+          x: Math.PI / 2 + 0.1,
+          ease: "power2.inOut",
+        },
+        ">"
       );
 
+    // Third section: Rotate to the left
     gsap
       .timeline({
         scrollTrigger: {
@@ -48,14 +80,14 @@ function Model({ scrollY }: { scrollY: React.MutableRefObject<number> }) {
           scrub: true,
         },
       })
-      .to(meshRef.current.position, {
-        x: -viewport.width / 4,
+      .to(groupRef.current.rotation, {
+        y: -Math.PI / 4,
         ease: "power2.inOut",
       })
       .to(
-        meshRef.current.rotation,
+        groupRef.current.position,
         {
-          y: -Math.PI / 2,
+          x: -viewport.width / 4,
           ease: "power2.inOut",
         },
         "<"
@@ -63,16 +95,25 @@ function Model({ scrollY }: { scrollY: React.MutableRefObject<number> }) {
   }, [viewport.width]);
 
   useFrame(() => {
-    if (meshRef.current) {
-      meshRef.current.position.y =
-        0.3 + Math.sin(scrollY.current * 0.002) * 0.2;
+    if (groupRef.current) {
+      groupRef.current.position.y =
+        Math.sin(scrollY.current * 0.002) * 0.2 - 1.0;
     }
   });
 
   return (
-    <mesh ref={meshRef} scale={0.007} rotation={[0, -2.5, 0]}>
-      <primitive object={nodes.LOD3spShape} />
-    </mesh>
+    <group
+      ref={groupRef}
+      scale={1.4}
+      rotation={[-Math.PI / 2.0 - 0.3, Math.PI, Math.PI]}
+    >
+      <mesh ref={topRef}>
+        <primitive object={topModel.nodes.Top} />
+      </mesh>
+      <mesh ref={bottomRef}>
+        <primitive object={bottomModel.nodes.Bottom} />
+      </mesh>
+    </group>
   );
 }
 
@@ -88,43 +129,78 @@ export default function Scene() {
   }, []);
 
   useEffect(() => {
-    gsap.utils
-      .toArray<HTMLElement>(["#section1 > div", "#section2 > div"])
-      .forEach((section, i) => {
-        gsap.fromTo(
-          section,
-          { x: i % 2 === 0 ? 100 : -100, opacity: 0 },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: section,
-              start: "top 80%",
-              end: "bottom 20%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
+    const text1 = document.getElementById("text-1");
+    const text2 = document.getElementById("text-2");
+    const text3 = document.getElementById("text-3");
+
+    console.log(text1);
+
+    if (!text1 || !text2 || !text3) return;
+
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: "#section1",
+          start: "top bottom",
+          end: "50% bottom",
+          scrub: true,
+        },
+      })
+      .to(text1, {
+        opacity: 0,
+        ease: "power2.inOut",
       });
+
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: "#section1",
+          start: "top 50%",
+          end: "top top",
+          scrub: true,
+        },
+      })
+      .to(text2, {
+        opacity: 1,
+        ease: "power2.inOut",
+      });
+
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: "#section2",
+          start: "top 50%",
+          end: "top top",
+          scrub: true,
+        },
+      })
+      .to(
+        text3,
+        {
+          opacity: 1,
+          ease: "power2.inOut",
+        },
+        "<"
+      );
   }, []);
 
   return (
     <div className="fixed inset-0 pointer-events-none">
-      <Canvas camera={{ position: [0, 2, 5], fov: 50 }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight intensity={2.0} position={[5, 5, 5]} />
-        <Model scrollY={scrollY} />
+      <Canvas camera={{ position: [0, 1, 5], fov: 60 }}>
+        <directionalLight intensity={4.0} position={[0, 0, 5]} />
+        <directionalLight intensity={4.0} position={[0, 5, 0]} />
+        <directionalLight intensity={2.0} position={[5, 0, 0]} />
+        <MacBook scrollY={scrollY} />
         <OrbitControls
           enableZoom={false}
           enablePan={false}
           enableRotate={false}
         />
         <ContactShadows
-          opacity={0.3}
-          scale={100}
-          blur={0.2}
+          opacity={0.1}
+          position={[0, 0, 0]}
+          scale={10}
+          blur={1.0}
           far={10}
           resolution={1024}
           color="#000000"

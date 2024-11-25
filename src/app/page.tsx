@@ -6,11 +6,11 @@ export default function Home() {
       <Scene />
       <section
         id="hero"
-        className="h-screen flex items-center justify-center relative"
+        className="h-screen flex items-end justify-center relative"
       >
-        <div className="text-center mt-64 z-10">
-          <h1 className="text-6xl font-bold mb-5">Welcome to Our 3D World</h1>
-          <p className="text-xl">Scroll down to explore</p>
+        <div id="text-1" className="text-center mb-32 z-10">
+          <h1 className="text-6xl font-bold mb-5">Meet the MacBook Pro</h1>
+          <p className="text-xl">Power re-imagined.</p>
         </div>
       </section>
       <section
@@ -18,11 +18,11 @@ export default function Home() {
         className="h-screen flex items-center justify-start relative"
       >
         <div className="container mx-auto px-6">
-          <div className="max-w-lg">
-            <h2 className="text-4xl font-bold mb-4">Discover Innovation</h2>
+          <div id="text-2" className="max-w-lg opacity-0">
+            <h2 className="text-4xl font-bold mb-4">Retina Display</h2>
             <p className="text-xl">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in
-              dui mauris.
+              Razor-sharp text, breathtaking colors, and lifelike tones for an
+              immersive visual experience.
             </p>
           </div>
         </div>
@@ -31,7 +31,7 @@ export default function Home() {
         id="section2"
         className="h-screen flex items-center justify-end relative"
       >
-        <div className="container mx-auto px-6">
+        <div id="text-3" className="container mx-auto px-6 opacity-0">
           <div className="max-w-lg ml-auto text-right">
             <h2 className="text-4xl font-bold mb-4 text-gray-800">
               Embrace the Future

@@ -8,22 +8,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gradient-to-br from-purple-300 to-blue-300 min-h-screen">
+      <body className="bg-gradient-to-br from-white to-blue-300 min-h-screen">
         <nav className="sticky top-0 z-50 bg-white bg-opacity-80 backdrop-blur-md shadow-md">
           <div className="container mx-auto px-6 py-3">
             <div className="flex justify-between items-center">
-              <Link href="/" className="text-xl font-bold text-gray-800">
-                Logo
+              <Link href="/" className="text-xl text-gray-800">
+                Apple
               </Link>
               <div className="hidden md:flex space-x-4">
                 <Link href="#" className="text-gray-600 hover:text-gray-900">
-                  Home
+                  Shop
+                </Link>
+                <Link href="#" className="text-gray-600 hover:text-gray-900">
+                  Support
                 </Link>
                 <Link href="#" className="text-gray-600 hover:text-gray-900">
                   About
-                </Link>
-                <Link href="#" className="text-gray-600 hover:text-gray-900">
-                  Services
                 </Link>
                 <Link href="#" className="text-gray-600 hover:text-gray-900">
                   Contact
