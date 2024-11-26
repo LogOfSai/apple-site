@@ -8,7 +8,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gradient-to-br from-white to-blue-300 min-h-screen">
+      <body className="min-h-screen" suppressHydrationWarning>
         <nav className="sticky top-0 z-50 bg-white bg-opacity-80 backdrop-blur-md shadow-md">
           <div className="container mx-auto px-6 py-3">
             <div className="flex justify-between items-center">
