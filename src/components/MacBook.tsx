@@ -8,10 +8,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function MacBook() {
   const topModel = useGLTF(
-    "/nextjs-3d-scroll-animations/assets/Macbook_Top.glb"
+    "/assets/Macbook_Top.glb"
   );
   const bottomModel = useGLTF(
-    "/nextjs-3d-scroll-animations/assets/Macbook_Bottom.glb"
+    "/assets/Macbook_Bottom.glb"
   );
   const groupRef = useRef<THREE.Group>(null);
   const topRef = useRef<THREE.Mesh>(null);
