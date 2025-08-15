@@ -1,10 +1,8 @@
+
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  basePath: "/nextjs-3d-scroll-animations",
-  publicRuntimeConfig: {
-    basePath: "/nextjs-3d-scroll-animations",
-  },
+  // Remove basePath for Heroku compatibility unless you need subpath hosting
 };
 
 export default nextConfig;

@@ -29,8 +29,26 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy on Heroku
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To deploy on Heroku:
+
+1. Make sure you have a `Procfile` with:
+	```
+	web: pnpm start
+	```
+2. Set your buildpack to Node.js (Heroku does this automatically for most Node projects).
+3. Ensure your `pnpm-lock.yaml` is committed. Heroku will use it for dependency installation.
+4. Push your code to Heroku:
+	```bash
+	git push heroku main
+	```
+5. Heroku will run `pnpm install`, `pnpm build`, and then `pnpm start`.
+
+If you use environment variables, set them in the Heroku dashboard or with the CLI:
+```bash
+heroku config:set VAR_NAME=value
+```
+
+For more details, see [Heroku Node.js Support](https://devcenter.heroku.com/articles/nodejs-support).
