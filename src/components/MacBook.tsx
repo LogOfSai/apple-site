@@ -20,7 +20,6 @@ export function MacBook() {
   useEffect(() => {
     if (!groupRef.current || !topRef.current || !bottomRef.current) return;
 
-    // First animation - MacBook opening
     gsap
       .timeline({
         scrollTrigger: {
@@ -69,7 +68,6 @@ export function MacBook() {
         "<"
       );
 
-    // Second animation - MacBook rotating
     gsap
       .timeline({
         scrollTrigger: {
@@ -87,58 +85,6 @@ export function MacBook() {
         groupRef.current.position,
         {
           x: -1.3,
-          ease: "power2.inOut",
-        },
-        "<"
-      );
-
-    // Third animation - MacBook moving out for iPhone
-    gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: "#section3",
-          start: "top bottom",
-          end: "top top",
-          scrub: true,
-        },
-      })
-      .to(groupRef.current.position, {
-        x: -3,
-        y: -1,
-        z: -2,
-        ease: "power2.inOut",
-      })
-      .to(
-        groupRef.current.scale,
-        {
-          x: 0.4,
-          y: 0.4,
-          z: 0.4,
-          ease: "power2.inOut",
-        },
-        "<"
-      );
-
-    // Fourth animation - MacBook final position
-    gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: "#section4",
-          start: "top bottom",
-          end: "top top",
-          scrub: true,
-        },
-      })
-      .to(groupRef.current.position, {
-        x: 2,
-        y: -0.5,
-        z: -1,
-        ease: "power2.inOut",
-      })
-      .to(
-        groupRef.current.rotation,
-        {
-          y: Math.PI * 2,
           ease: "power2.inOut",
         },
         "<"
