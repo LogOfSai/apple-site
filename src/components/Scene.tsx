@@ -3,7 +3,7 @@
 import { Canvas } from "@react-three/fiber";
 import { useEffect } from "react";
 import { MacBook } from "./MacBook";
-import { iPhone } from "./iPhone";
+import { IPhone } from "./iPhone";
 import { AirPods } from "./AirPods";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -119,7 +119,7 @@ export function Scene() {
       <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
         <directionalLight intensity={5} position={[1, 3, 3]} />
         <MacBook />
-        <iPhone />
+        <IPhone />
         <AirPods />
         <ContactShadows opacity={0.3} position={[0, -0.9, 0]} />
       </Canvas>
